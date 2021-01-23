@@ -62,7 +62,7 @@ class FragmentList : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             myViewModel = metricPointVm
         }
-
+        activity?.setTitle(R.string.list_title)
         return binding.root
     }
 

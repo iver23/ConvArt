@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:maxHeight="50dp"
                     android:inputType="numberDecimal"
+
                     android:text="@={myViewModel.inputX}"/>
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -50,7 +50,6 @@ class FragmentConvert : Fragment() {
 
         binding = FragmentConvertBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-
         return binding.root
     }
 
@@ -63,6 +62,7 @@ class FragmentConvert : Fragment() {
         metricPointVm.points.observe(viewLifecycleOwner, {
             val pointsSpinnerAdapter = PointsSpinnerAdapter(context!!, it)
             binding.pointOrigine.adapter = pointsSpinnerAdapter
+            binding.pointCible.adapter = pointsSpinnerAdapter
         })
 
     }
