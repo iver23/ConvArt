@@ -15,4 +15,5 @@
     <string name="objectif_tv_label">Objectif</string>
     <string name="point_cible_tv_str">Point Cible</string>
     <string name="list_title">Carnet des Points</string>
+    <string name="convert_btn_str">Calculer</string>
 </resources>
