@@ -1,13 +1,16 @@
 package com.abadil.convart.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.abadil.convart.FragmentListViewModelFactory
+import com.abadil.convart.FragmentConvertViewModelFactory
+import com.abadil.convart.R
 import com.abadil.convart.adapters.PointsSpinnerAdapter
 import com.abadil.convart.data.MetricPoint
 import com.abadil.convart.database.MetricPointDB
@@ -28,7 +31,7 @@ class FragmentConvert : Fragment() {
     //Binding object
     private lateinit var binding: FragmentConvertBinding
     //Reference to the ViewModel
-    private lateinit var metricPointVm: FragmentListViewModel
+    private lateinit var fragmentConvertVm: FragmentConvertViewModel
 
     private lateinit var selectedPointOrigine: MetricPoint
     private lateinit var selectedPointCible: MetricPoint
@@ -49,12 +52,12 @@ class FragmentConvert : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val metricPointDao = MetricPointDB.getInstance(container!!.context).metricCoordDao
         val repo = MetricPointRepo(metricPointDao)
-        val factory = FragmentListViewModelFactory(repo)
-        metricPointVm = ViewModelProvider(this, factory).get(FragmentListViewModel::class.java)
-
+        val factory = FragmentConvertViewModelFactory(repo)
+        fragmentConvertVm = ViewModelProvider(this, factory).get(FragmentConvertViewModel::class.java)
+        // Inflate the layout for this fragment
         binding = FragmentConvertBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -63,10 +66,11 @@ class FragmentConvert : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initSpinner()
+        watchIncorrectCoord()
     }
 
     private fun initSpinner(){
-        metricPointVm.points.observe(viewLifecycleOwner, {
+        fragmentConvertVm.points.observe(viewLifecycleOwner, {
             val pointsSpinnerAdapter = PointsSpinnerAdapter(context!!, it)
             binding.pointOrigine.adapter = pointsSpinnerAdapter
             binding.pointOrigine.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -93,6 +97,19 @@ class FragmentConvert : Fragment() {
             }
         })
 
+    }
+
+    // Display a toast if the user leaves a empty field
+    private fun watchIncorrectCoord(){
+        Log.i("ERROR", "watchIncorrectCoord Called")
+        fragmentConvertVm.isCoordIncorrect.observe(viewLifecycleOwner, { isCoordIncorrect ->
+            isCoordIncorrect?.apply {
+                if (this) {
+                    Toast.makeText(context, R.string.polar_coord_error, Toast.LENGTH_SHORT).show()
+                    fragmentConvertVm.resetError()
+                }
+            }
+        })
     }
 
     companion object {

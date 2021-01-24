@@ -110,12 +110,12 @@ class FragmentList : Fragment() {
                 }).attachToRecyclerView(binding.pointsRecyclerview)
     }
 
-    // Display a toast if the user leaves a empty field
+    // Display a toast if the user leaves an empty field
     private fun watchEmptyFields(){
         fragmentListVm.isEmpty.observe(viewLifecycleOwner, { isEmpty ->
             isEmpty?.apply {
                 if (this) {
-                    Toast.makeText(context, R.string.empty_field_error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.add_point_error, Toast.LENGTH_SHORT).show()
                     fragmentListVm.resetError()
                 }
             }
