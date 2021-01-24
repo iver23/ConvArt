@@ -1,4 +1,4 @@
-package com.abadil.convart
+package com.abadil.convart.ui
 
 import androidx.databinding.Bindable
 import androidx.databinding.Observable
@@ -6,16 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.abadil.convart.database.MetricPoint
+import com.abadil.convart.data.MetricPoint
 import com.abadil.convart.database.MetricPointRepo
 import kotlinx.coroutines.launch
 
-class MetricPointViewModel(private val repo: MetricPointRepo): ViewModel(), Observable {
+class FragmentListViewModel(private val repo: MetricPointRepo): ViewModel(), Observable {
 
     val points = repo.points
     private val _isEmpty = MutableLiveData<Boolean>()
     val isEmpty : LiveData<Boolean>
-    get() = _isEmpty
+        get() = _isEmpty
 
     @Bindable
     val inputDesignation = MutableLiveData<String>()

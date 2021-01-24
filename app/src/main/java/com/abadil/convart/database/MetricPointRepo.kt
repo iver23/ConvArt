@@ -1,5 +1,7 @@
 package com.abadil.convart.database
 
+import com.abadil.convart.data.MetricPoint
+
 class MetricPointRepo(private val dao: MetricPointDao) {
 
     val points = dao.getAllPoints()
@@ -12,7 +14,7 @@ class MetricPointRepo(private val dao: MetricPointDao) {
         dao.updatePoint(point)
     }
 
-    suspend fun delete(point:MetricPoint){
+    suspend fun delete(point: MetricPoint){
         dao.deletePoint(point)
     }
 

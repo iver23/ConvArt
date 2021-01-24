@@ -2,6 +2,7 @@ package com.abadil.convart.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.abadil.convart.data.MetricPoint
 
 @Dao
 interface MetricPointDao {

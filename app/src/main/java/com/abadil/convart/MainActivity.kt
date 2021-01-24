@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.abadil.convart.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.abadil.convart.ui.FragmentConvert
+import com.abadil.convart.ui.FragmentList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

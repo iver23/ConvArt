@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="myViewModel"
-            type="com.abadil.convart.MetricPointViewModel" />
+            name="listVM"
+            type="com.abadil.convart.ui.FragmentListViewModel" />
     </data>
     <LinearLayout
 
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".FragmentList">
+        tools:context=".ui.FragmentList">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:maxHeight="50dp"
                     android:inputType="text"
-                    android:text="@={myViewModel.inputDesignation}"/>
+                    android:text="@={listVM.inputDesignation}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +59,7 @@
                     android:maxHeight="50dp"
                     android:inputType="numberDecimal"
 
-                    android:text="@={myViewModel.inputX}"/>
+                    android:text="@={listVM.inputX}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:maxHeight="50dp"
                     android:inputType="numberDecimal"
-                    android:text="@={myViewModel.inputY}"/>
+                    android:text="@={listVM.inputY}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -93,7 +93,7 @@
                 android:paddingEnd="16dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/purple_500"
-                android:onClick="@{() -> myViewModel.addPoint()}"/>
+                android:onClick="@{() -> listVM.addPoint()}"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -1,10 +1,11 @@
-package com.abadil.convart
+package com.abadil.convart.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.abadil.convart.database.MetricPoint
+import com.abadil.convart.R
+import com.abadil.convart.data.MetricPoint
 import com.abadil.convart.databinding.RecyclerviewItemBinding
 
 class MyRecyclerViewAdapter(private var pointsList: List<MetricPoint>): RecyclerView.Adapter<MyViewHolder>(){
@@ -23,7 +24,7 @@ class MyRecyclerViewAdapter(private var pointsList: List<MetricPoint>): Recycler
         return pointsList.size
     }
 
-    public fun getPointAtPosition(position: Int): MetricPoint{
+    public fun getPointAtPosition(position: Int): MetricPoint {
         return pointsList[position]
     }
 

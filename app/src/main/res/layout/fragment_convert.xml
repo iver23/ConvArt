@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="convertVM"
+            type="com.abadil.convart.ui.FragmentConvertViewModel" />
+    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -74,7 +79,8 @@
                         android:id="@+id/go_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:text="@={convertVM.inputGisement}"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +93,8 @@
                         android:id="@+id/do_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:text="@={convertVM.inputDistance}"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -130,8 +137,7 @@
                 android:paddingEnd="16dp"
                 android:paddingRight="16dp"
                 android:text="@string/convert_btn_str"
-                app:strokeColor="@color/purple_500"
-                app:strokeWidth="1dp" />
+                android:onClick="@{() -> convertVM.calculate()}" />
 
             <LinearLayout
                 android:layout_width="200dp"

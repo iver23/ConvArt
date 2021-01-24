@@ -1,11 +1,15 @@
-package com.abadil.convart
+package com.abadil.convart.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.abadil.convart.FragmentListViewModelFactory
+import com.abadil.convart.adapters.PointsSpinnerAdapter
+import com.abadil.convart.data.MetricPoint
 import com.abadil.convart.database.MetricPointDB
 import com.abadil.convart.database.MetricPointRepo
 import com.abadil.convart.databinding.FragmentConvertBinding
@@ -24,7 +28,10 @@ class FragmentConvert : Fragment() {
     //Binding object
     private lateinit var binding: FragmentConvertBinding
     //Reference to the ViewModel
-    private lateinit var metricPointVm: MetricPointViewModel
+    private lateinit var metricPointVm: FragmentListViewModel
+
+    private lateinit var selectedPointOrigine: MetricPoint
+    private lateinit var selectedPointCible: MetricPoint
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -45,8 +52,8 @@ class FragmentConvert : Fragment() {
         // Inflate the layout for this fragment
         val metricPointDao = MetricPointDB.getInstance(container!!.context).metricCoordDao
         val repo = MetricPointRepo(metricPointDao)
-        val factory = MetricPointViewModelFactory(repo)
-        metricPointVm = ViewModelProvider(this, factory).get(MetricPointViewModel::class.java)
+        val factory = FragmentListViewModelFactory(repo)
+        metricPointVm = ViewModelProvider(this, factory).get(FragmentListViewModel::class.java)
 
         binding = FragmentConvertBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -62,7 +69,28 @@ class FragmentConvert : Fragment() {
         metricPointVm.points.observe(viewLifecycleOwner, {
             val pointsSpinnerAdapter = PointsSpinnerAdapter(context!!, it)
             binding.pointOrigine.adapter = pointsSpinnerAdapter
+            binding.pointOrigine.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    selectedPointOrigine = parent?.getItemAtPosition(position) as MetricPoint
+                }
+
+            }
             binding.pointCible.adapter = pointsSpinnerAdapter
+            binding.pointCible.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    selectedPointCible = parent?.getItemAtPosition(position) as MetricPoint
+
+                }
+
+            }
         })
 
     }

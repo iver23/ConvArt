@@ -1,4 +1,4 @@
-package com.abadil.convart
+package com.abadil.convart.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
-import com.abadil.convart.database.MetricPoint
+import com.abadil.convart.R
+import com.abadil.convart.data.MetricPoint
 import com.abadil.convart.databinding.CustomSpinnerItemLayoutBinding
 
 

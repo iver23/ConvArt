@@ -1,4 +1,4 @@
-package com.abadil.convart
+package com.abadil.convart.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.abadil.convart.FragmentListViewModelFactory
+import com.abadil.convart.R
+import com.abadil.convart.adapters.MyRecyclerViewAdapter
 import com.abadil.convart.database.MetricPointDB
 import com.abadil.convart.database.MetricPointRepo
 import com.abadil.convart.databinding.FragmentListBinding
@@ -35,7 +38,7 @@ class FragmentList : Fragment() {
     //Binding object
     private lateinit var binding: FragmentListBinding
     //Reference to the ViewModel
-    private lateinit var metricPointVm: MetricPointViewModel
+    private lateinit var fragmentListVm: FragmentListViewModel
     // Reference to the Recyclerview adapter
     private lateinit var pointsListRecyclerViewAdapter: MyRecyclerViewAdapter
 
@@ -54,13 +57,13 @@ class FragmentList : Fragment() {
         //Setting up the database
         val metricPointDao = MetricPointDB.getInstance(container!!.context).metricCoordDao
         val repo = MetricPointRepo(metricPointDao)
-        val factory = MetricPointViewModelFactory(repo)
-        metricPointVm = ViewModelProvider(this, factory).get(MetricPointViewModel::class.java)
+        val factory = FragmentListViewModelFactory(repo)
+        fragmentListVm = ViewModelProvider(this, factory).get(FragmentListViewModel::class.java)
         // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(inflater, container, false)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            myViewModel = metricPointVm
+            listVM = fragmentListVm
         }
         activity?.setTitle(R.string.list_title)
         return binding.root
@@ -73,7 +76,7 @@ class FragmentList : Fragment() {
     }
 
     private fun displayPoints(){
-        metricPointVm.points.observe(viewLifecycleOwner, Observer {
+        fragmentListVm.points.observe(viewLifecycleOwner, Observer {
             pointsListRecyclerViewAdapter = MyRecyclerViewAdapter(it)
             binding.pointsRecyclerview.adapter = pointsListRecyclerViewAdapter
         })
@@ -101,7 +104,7 @@ class FragmentList : Fragment() {
 
                     override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
                         // remove from adapter
-                        metricPointVm.delete(pointsListRecyclerViewAdapter.getPointAtPosition(viewHolder.adapterPosition))
+                        fragmentListVm.delete(pointsListRecyclerViewAdapter.getPointAtPosition(viewHolder.adapterPosition))
 
                     }
                 }).attachToRecyclerView(binding.pointsRecyclerview)
@@ -109,11 +112,11 @@ class FragmentList : Fragment() {
 
     // Display a toast if the user leaves a empty field
     private fun watchEmptyFields(){
-        metricPointVm.isEmpty.observe(viewLifecycleOwner, { isEmpty ->
+        fragmentListVm.isEmpty.observe(viewLifecycleOwner, { isEmpty ->
             isEmpty?.apply {
                 if (this) {
                     Toast.makeText(context, R.string.empty_field_error, Toast.LENGTH_SHORT).show()
-                    metricPointVm.resetError()
+                    fragmentListVm.resetError()
                 }
             }
         })
