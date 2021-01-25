@@ -12,5 +12,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:ellipsize="marquee"
         android:gravity="center"
+        android:textColor="@color/purple_700"
         tools:text="S15"/>
 </layout>

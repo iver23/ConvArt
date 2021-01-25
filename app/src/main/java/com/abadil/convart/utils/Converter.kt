@@ -5,10 +5,13 @@ import com.abadil.convart.data.PolarPoint
 import kotlin.math.*
 
 object Converter {
+    lateinit var pointOrigine: MetricPoint
+    lateinit var pointCible: MetricPoint
+    lateinit var objectifOrigine: PolarPoint
 
     @JvmStatic
-    fun convert(pointOrigine: MetricPoint, objectif: PolarPoint, pointCible: MetricPoint): PolarPoint{
-        return calculatePolarCoord(calculateMetricCoord(pointOrigine, objectif), pointCible)
+    fun convert(): PolarPoint{
+        return calculatePolarCoord(calculateMetricCoord(pointOrigine, objectifOrigine), pointCible)
     }
 
     private fun calculateMetricCoord(origine: MetricPoint, objectif: PolarPoint): MetricPoint{

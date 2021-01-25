@@ -5,7 +5,9 @@ import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.abadil.convart.data.PolarPoint
 import com.abadil.convart.database.MetricPointRepo
+import com.abadil.convart.utils.Converter
 
 
 class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(), Observable {
@@ -21,6 +23,11 @@ class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(),
     @Bindable
     val inputDistance = MutableLiveData<String>()
 
+    @Bindable
+    val gisementResult = MutableLiveData<String>()
+
+    @Bindable
+    val distanceResult = MutableLiveData<String>()
 
     fun calculate() {
         if ((inputGisement.value == null) || (inputGisement.value!!.toFloat() > 6400)) {
@@ -29,14 +36,21 @@ class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(),
         }
         val gisement = inputGisement.value!!.trim().toFloat()
 
-        if (inputDistance.value == null){
+        if (inputDistance.value == null) {
             _isCoordIncorrect.value = true
             return
         }
         val distance = inputDistance.value!!.trim().toFloat()
+
+        Converter.objectifOrigine = PolarPoint(gisement, distance)
+        val obj = Converter.convert()
+
+        gisementResult.postValue("%.1f".format(obj.gisement))
+        distanceResult.postValue("%.1f".format(obj.distance))
+
     }
 
-    fun resetError(){
+    fun resetError() {
         _isCoordIncorrect.value = null
     }
 

@@ -19,6 +19,7 @@ import com.abadil.convart.data.MetricPoint
 import com.abadil.convart.database.MetricPointDB
 import com.abadil.convart.database.MetricPointRepo
 import com.abadil.convart.databinding.FragmentConvertBinding
+import com.abadil.convart.utils.Converter
 import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
@@ -88,7 +89,7 @@ class FragmentConvert : Fragment() {
                 }
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    selectedPointOrigine = parent?.getItemAtPosition(position) as MetricPoint
+                    Converter.pointOrigine = parent?.getItemAtPosition(position) as MetricPoint
                 }
 
             }
@@ -99,7 +100,7 @@ class FragmentConvert : Fragment() {
                 }
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    selectedPointCible = parent?.getItemAtPosition(position) as MetricPoint
+                    Converter.pointCible = parent?.getItemAtPosition(position) as MetricPoint
 
                 }
 

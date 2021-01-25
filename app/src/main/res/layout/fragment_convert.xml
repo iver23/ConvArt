@@ -157,16 +157,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="start"
+                        android:gravity="center"
                         android:text="@string/gst_label_tv_str"
                         android:textColor="#FF0000"
                         android:textStyle="bold" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/gisementResult"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        android:text="@={convertVM.gisementResult}"
+                        android:textColor="#FF0000"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,16 +183,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="start"
+                        android:gravity="center"
                         android:text="@string/dce_label_tv_str"
                         android:textColor="#FF0000"
                         android:textStyle="bold" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/distanceResult"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        android:gravity="center"
+                        android:text="@={convertVM.distanceResult}"
+                        android:textColor="#FF0000"
+                        android:textStyle="bold"/>
                 </LinearLayout>
             </LinearLayout>
 
