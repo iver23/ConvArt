@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.abadil.convart.database.MetricPointRepo
 
+
 class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(), Observable {
     val points = repo.points
     private val _isCoordIncorrect = MutableLiveData<Boolean>()
@@ -20,8 +21,9 @@ class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(),
     @Bindable
     val inputDistance = MutableLiveData<String>()
 
+
     fun calculate() {
-        if ((inputGisement.value == null) or (inputGisement.value!!.toFloat() > 6400)) {
+        if ((inputGisement.value == null) || (inputGisement.value!!.toFloat() > 6400)) {
             _isCoordIncorrect.value = true
             return
         }
@@ -32,8 +34,6 @@ class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(),
             return
         }
         val distance = inputDistance.value!!.trim().toFloat()
-        inputGisement.value = null
-        inputDistance.value = null
     }
 
     fun resetError(){

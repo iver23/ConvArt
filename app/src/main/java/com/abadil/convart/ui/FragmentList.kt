@@ -1,10 +1,13 @@
 package com.abadil.convart.ui
 
+import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +21,7 @@ import com.abadil.convart.adapters.MyRecyclerViewAdapter
 import com.abadil.convart.database.MetricPointDB
 import com.abadil.convart.database.MetricPointRepo
 import com.abadil.convart.databinding.FragmentListBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,10 +41,15 @@ class FragmentList : Fragment() {
 
     //Binding object
     private lateinit var binding: FragmentListBinding
+
     //Reference to the ViewModel
     private lateinit var fragmentListVm: FragmentListViewModel
+
     // Reference to the Recyclerview adapter
     private lateinit var pointsListRecyclerViewAdapter: MyRecyclerViewAdapter
+
+    // snackbar where to display the error for the polar coordinates
+    private lateinit var snackbarError: Snackbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,18 +80,19 @@ class FragmentList : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupSnackbar(view)
         initRecyclerview()
         watchEmptyFields()
     }
 
-    private fun displayPoints(){
+    private fun displayPoints() {
         fragmentListVm.points.observe(viewLifecycleOwner, Observer {
             pointsListRecyclerViewAdapter = MyRecyclerViewAdapter(it)
             binding.pointsRecyclerview.adapter = pointsListRecyclerViewAdapter
         })
     }
 
-    private fun initRecyclerview(){
+    private fun initRecyclerview() {
         binding.pointsRecyclerview.layoutManager = LinearLayoutManager(context)
         binding.pointsRecyclerview.setHasFixedSize(true)
         displayPoints()
@@ -90,7 +100,7 @@ class FragmentList : Fragment() {
     }
 
     // Setting up the swipe to delete on the recyclerview
-    private fun setupSwipeToDelete(){
+    private fun setupSwipeToDelete() {
         val mIth = ItemTouchHelper(
                 object : ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -111,15 +121,31 @@ class FragmentList : Fragment() {
     }
 
     // Display a toast if the user leaves an empty field
-    private fun watchEmptyFields(){
+    private fun watchEmptyFields() {
         fragmentListVm.isEmpty.observe(viewLifecycleOwner, { isEmpty ->
             isEmpty?.apply {
                 if (this) {
-                    Toast.makeText(context, R.string.add_point_error, Toast.LENGTH_SHORT).show()
+                    snackbarError.show()
                     fragmentListVm.resetError()
                 }
             }
         })
+    }
+
+    private fun setupSnackbar(view: View) {
+        snackbarError = Snackbar.make(view, R.string.add_point_error, Snackbar.LENGTH_SHORT)
+        // get snackbar view
+        // get snackbar view
+        val mView: View = snackbarError.view
+        mView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.snackbar_background))
+        // get textview inside snackbar view
+        // get textview inside snackbar view
+        val mTextView = mView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+        mTextView.setTextColor(ContextCompat.getColor(context!!, R.color.snackbar_text))
+        // set text to center
+        // set text to center
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) mTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        else mTextView.gravity = Gravity.CENTER_HORIZONTAL
     }
 
     companion object {
@@ -134,11 +160,11 @@ class FragmentList : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FragmentList().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                FragmentList().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+                        putString(ARG_PARAM2, param2)
+                    }
                 }
-            }
     }
 }
