@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="convertVM"
@@ -53,15 +54,14 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="8dp"
                     android:text="@string/objectif_tv_label"
                     android:textAllCaps="true"
                     android:textColor="#FF0000"
@@ -79,6 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
+                        android:textColor="#FF0000"
+                        android:textStyle="bold"
                         android:text="@={convertVM.inputGisement}"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +95,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
+                        android:textColor="#FF0000"
+                        android:textStyle="bold"
                         android:text="@={convertVM.inputDistance}"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -103,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/outside_shape_purple"
                 android:orientation="horizontal"
+                android:layout_marginBottom="13dp"
                 android:padding="7dp">
 
                 <TextView
@@ -130,74 +135,70 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:paddingStart="16dp"
-                android:paddingLeft="16dp"
-                android:paddingEnd="16dp"
-                android:paddingRight="16dp"
                 android:text="@string/convert_btn_str"
                 android:onClick="@{() -> convertVM.calculate()}" />
 
             <LinearLayout
-                android:layout_width="200dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/outside_shape"
                 android:orientation="vertical"
-                android:padding="8dp">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="5dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/gst_label_tv_str"
                         android:textColor="#FF0000"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/gisementResult"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_weight="3"
                         android:padding="8dp"
                         android:text="@={convertVM.gisementResult}"
                         android:textColor="#FF0000"
-                        android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                        android:gravity="end"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="5dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/dce_label_tv_str"
                         android:textColor="#FF0000"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/distanceResult"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_weight="3"
+                        android:gravity="end"
                         android:padding="8dp"
-                        android:gravity="center"
                         android:text="@={convertVM.distanceResult}"
                         android:textColor="#FF0000"
-                        android:textStyle="bold"/>
+                        tools:text="123456"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
                 </LinearLayout>
             </LinearLayout>
 

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,7 +61,7 @@ class FragmentList : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         //Setting up the database
         val metricPointDao = MetricPointDB.getInstance(container!!.context).metricCoordDao
         val repo = MetricPointRepo(metricPointDao)
@@ -86,7 +85,7 @@ class FragmentList : Fragment() {
     }
 
     private fun displayPoints() {
-        fragmentListVm.points.observe(viewLifecycleOwner, Observer {
+        fragmentListVm.points.observe(viewLifecycleOwner, {
             pointsListRecyclerViewAdapter = MyRecyclerViewAdapter(it)
             binding.pointsRecyclerview.adapter = pointsListRecyclerViewAdapter
         })
@@ -101,14 +100,11 @@ class FragmentList : Fragment() {
 
     // Setting up the swipe to delete on the recyclerview
     private fun setupSwipeToDelete() {
-        val mIth = ItemTouchHelper(
+        ItemTouchHelper(
                 object : ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
                     override fun onMove(recyclerView: RecyclerView,
                                         viewHolder: ViewHolder, target: ViewHolder): Boolean {
-                        val fromPos = viewHolder.adapterPosition
-                        val toPos = target.adapterPosition
-                        // move item in `fromPos` to `toPos` in adapter.
                         return true // true if moved, false otherwise
                     }
 
@@ -135,14 +131,11 @@ class FragmentList : Fragment() {
     private fun setupSnackbar(view: View) {
         snackbarError = Snackbar.make(view, R.string.add_point_error, Snackbar.LENGTH_SHORT)
         // get snackbar view
-        // get snackbar view
         val mView: View = snackbarError.view
         mView.setBackgroundColor(ContextCompat.getColor(context!!, R.color.snackbar_background))
         // get textview inside snackbar view
-        // get textview inside snackbar view
         val mTextView = mView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
         mTextView.setTextColor(ContextCompat.getColor(context!!, R.color.snackbar_text))
-        // set text to center
         // set text to center
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) mTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         else mTextView.gravity = Gravity.CENTER_HORIZONTAL

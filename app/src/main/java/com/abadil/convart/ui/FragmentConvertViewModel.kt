@@ -42,7 +42,7 @@ class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(),
         }
         val distance = inputDistance.value!!.trim().toFloat()
 
-        Converter.objectifOrigine = PolarPoint(gisement, distance)
+        Converter.objectif = PolarPoint(gisement, distance)
         val obj = Converter.convert()
 
         gisementResult.postValue("%.1f".format(obj.gisement))

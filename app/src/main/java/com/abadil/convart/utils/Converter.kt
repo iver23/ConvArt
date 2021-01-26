@@ -5,16 +5,16 @@ import com.abadil.convart.data.PolarPoint
 import kotlin.math.*
 
 object Converter {
-    lateinit var pointOrigine: MetricPoint
-    lateinit var pointCible: MetricPoint
-    lateinit var objectifOrigine: PolarPoint
+    var pointOrigine: MetricPoint = MetricPoint("ptOr", 0F, 0F)
+    var pointCible: MetricPoint = MetricPoint("ptCib", 0F, 0F)
+    var objectif: PolarPoint = PolarPoint(0F, 0F)
 
     @JvmStatic
-    fun convert(): PolarPoint{
-        return calculatePolarCoord(calculateMetricCoord(pointOrigine, objectifOrigine), pointCible)
+    fun convert(): PolarPoint {
+        return calculatePolarCoord(calculateMetricCoord(pointOrigine, objectif), pointCible)
     }
 
-    private fun calculateMetricCoord(origine: MetricPoint, objectif: PolarPoint): MetricPoint{
+    private fun calculateMetricCoord(origine: MetricPoint, objectif: PolarPoint): MetricPoint {
         val radianGisement: Double = (objectif.gisement * PI) / 3200
 
         val dx = objectif.distance * sin(radianGisement)
@@ -26,7 +26,7 @@ object Converter {
         return MetricPoint("Obj", xObj, yObj)
     }
 
-    private fun calculatePolarCoord(objectif: MetricPoint, cible: MetricPoint): PolarPoint{
+    private fun calculatePolarCoord(objectif: MetricPoint, cible: MetricPoint): PolarPoint {
         val gisObj: Float
 
         val dx: Float = objectif.x - cible.x

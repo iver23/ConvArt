@@ -2,7 +2,6 @@ package com.abadil.convart.ui
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -39,11 +38,9 @@ class FragmentConvert : Fragment() {
     //Reference to the ViewModel
     private lateinit var fragmentConvertVm: FragmentConvertViewModel
 
-    private lateinit var selectedPointOrigine: MetricPoint
-    private lateinit var selectedPointCible: MetricPoint
-
     // snackbar where to display the error for the polar coordinates
     private lateinit var snackbarError: Snackbar
+
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -57,10 +54,11 @@ class FragmentConvert : Fragment() {
         }
     }
 
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val metricPointDao = MetricPointDB.getInstance(container!!.context).metricCoordDao
         val repo = MetricPointRepo(metricPointDao)
         val factory = FragmentConvertViewModelFactory(repo)
@@ -85,6 +83,7 @@ class FragmentConvert : Fragment() {
             binding.pointOrigine.adapter = pointsSpinnerAdapter
             binding.pointOrigine.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
+                    Converter.pointOrigine = MetricPoint("Origine", 0F, 0F)
 
                 }
 
@@ -96,6 +95,7 @@ class FragmentConvert : Fragment() {
             binding.pointCible.adapter = pointsSpinnerAdapter
             binding.pointCible.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
+                    Converter.pointCible = MetricPoint("Cible", 0F, 0F)
 
                 }
 
@@ -111,7 +111,6 @@ class FragmentConvert : Fragment() {
 
     // Display a toast if the user leaves a empty field
     private fun watchIncorrectCoord() {
-        Log.i("ERROR", "watchIncorrectCoord Called")
         fragmentConvertVm.isCoordIncorrect.observe(viewLifecycleOwner, { isCoordIncorrect ->
             isCoordIncorrect?.apply {
                 if (this) {
@@ -134,8 +133,6 @@ class FragmentConvert : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) sbTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         else sbTextView.gravity = Gravity.CENTER_HORIZONTAL
     }
-
-
 
     companion object {
         /**

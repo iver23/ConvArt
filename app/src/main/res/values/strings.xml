@@ -10,8 +10,8 @@
     <string name="add_btn_str">AJOUTER</string>
     <string name="point_origine_tv_str">Point Origine</string>
     <string name="add_point_error">Veuillez Saisir Nom &amp; Coordonnées</string>
-    <string name="gst_label_tv_str">Go</string>
-    <string name="dce_label_tv_str">Do</string>
+    <string name="gst_label_tv_str">Go:</string>
+    <string name="dce_label_tv_str">Do:</string>
     <string name="objectif_tv_label">Objectif</string>
     <string name="point_cible_tv_str">Point Cible</string>
     <string name="list_title">Carnet des Points</string>
