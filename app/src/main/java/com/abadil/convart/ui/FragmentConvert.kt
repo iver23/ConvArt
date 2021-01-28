@@ -73,11 +73,11 @@ class FragmentConvert : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupSnackbar(view)
-        initSpinner()
+        setupSpinner()
         watchIncorrectCoord()
     }
 
-    private fun initSpinner() {
+    private fun setupSpinner() {
         fragmentConvertVm.points.observe(viewLifecycleOwner, {
             val pointsSpinnerAdapter = PointsSpinnerAdapter(context!!, it)
             binding.pointOrigine.adapter = pointsSpinnerAdapter

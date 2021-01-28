@@ -24,7 +24,7 @@ class MyRecyclerViewAdapter(private var pointsList: List<MetricPoint>): Recycler
         return pointsList.size
     }
 
-    public fun getPointAtPosition(position: Int): MetricPoint {
+    fun getPointAtPosition(position: Int): MetricPoint {
         return pointsList[position]
     }
 
@@ -33,8 +33,8 @@ class MyRecyclerViewAdapter(private var pointsList: List<MetricPoint>): Recycler
 class MyViewHolder(private val binding: RecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
     fun bind(point: MetricPoint){
         binding.idTv.text = point._id
-        binding.xTv.text = point.x.toString()
-        binding.yTv.text = point.y.toString()
+        binding.xTv.text = "%.0f".format(point.x)
+        binding.yTv.text = "%.0f".format(point.y)
 
     }
 }

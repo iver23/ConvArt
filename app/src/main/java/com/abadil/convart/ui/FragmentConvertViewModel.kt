@@ -15,6 +15,7 @@ class FragmentConvertViewModel(private val repo: MetricPointRepo) : ViewModel(),
     private val _isCoordIncorrect = MutableLiveData<Boolean>()
     val isCoordIncorrect: LiveData<Boolean>
         get() = _isCoordIncorrect
+    
 
 
     @Bindable

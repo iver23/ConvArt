@@ -5,8 +5,8 @@
     <string name="bottom_nav_convert_str">Convert</string>
     <string name="bottom_nav_list_str">Points</string>
     <string name="id_edittext_hint">Désignation</string>
-    <string name="x_edittext_hint">X</string>
-    <string name="y_edittext_hint">Y</string>
+    <string name="x_edittext_hint">X:</string>
+    <string name="y_edittext_hint">Y:</string>
     <string name="add_btn_str">AJOUTER</string>
     <string name="point_origine_tv_str">Point Origine</string>
     <string name="add_point_error">Veuillez Saisir Nom &amp; Coordonnées</string>

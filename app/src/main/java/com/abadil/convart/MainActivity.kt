@@ -1,7 +1,7 @@
 package com.abadil.convart
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.abadil.convart.databinding.ActivityMainBinding
 import com.abadil.convart.ui.FragmentConvert
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId){
                 R.id.bottom_nav_convert -> {
                     setCurrentFragment(convertFragment)
+                    this.setTitle(R.string.app_name)
                     true
                 }
                 R.id.bottom_nav_list -> {
