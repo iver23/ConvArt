@@ -58,7 +58,7 @@ class FragmentListViewModel(private val repo: MetricPointRepo): ViewModel(), Obs
         _isEmpty.value = null
     }
 
-    private fun insert(point: MetricPoint) = viewModelScope.launch { repo.insert(point) }
+    fun insert(point: MetricPoint) = viewModelScope.launch { repo.insert(point) }
 
     fun update(point: MetricPoint) = viewModelScope.launch { repo.update(point) }
 

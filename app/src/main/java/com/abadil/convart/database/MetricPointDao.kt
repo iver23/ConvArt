@@ -17,6 +17,6 @@ interface MetricPointDao {
     suspend fun deletePoint(point: MetricPoint)
 
     @Query("SELECT * FROM list_points")
-    fun getAllPoints(): LiveData<List<MetricPoint>>
+    fun getAllPoints(): LiveData<MutableList<MetricPoint>>
 
 }

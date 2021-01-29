@@ -17,4 +17,8 @@
     <string name="list_title">Carnet des Points</string>
     <string name="convert_btn_str">Calculer</string>
     <string name="polar_coord_error">Veuillez saisir Go/Do valides</string>
+    <string name="delete">SUPPRIMER</string>
+    <string name="alertdialog_cancel_delete">ANNULER</string>
+    <string name="alertdialog_confirm_delete">SUPPRIMER</string>
+    <string name="alertdialog_delete_confirmation_title">Confirmation</string>
 </resources>

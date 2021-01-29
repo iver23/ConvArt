@@ -2,11 +2,13 @@ package com.abadil.convart.ui
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.abadil.convart.FragmentListViewModelFactory
 import com.abadil.convart.R
 import com.abadil.convart.adapters.MyRecyclerViewAdapter
+import com.abadil.convart.data.MetricPoint
 import com.abadil.convart.database.MetricPointDB
 import com.abadil.convart.database.MetricPointRepo
 import com.abadil.convart.databinding.FragmentListBinding
@@ -84,36 +87,53 @@ class FragmentList : Fragment() {
         watchEmptyFields()
     }
 
-    private fun displayPoints() {
-        fragmentListVm.points.observe(viewLifecycleOwner, {
-            pointsListRecyclerViewAdapter = MyRecyclerViewAdapter(it)
-            binding.pointsRecyclerview.adapter = pointsListRecyclerViewAdapter
-        })
-    }
-
     private fun initRecyclerview() {
-        binding.pointsRecyclerview.layoutManager = LinearLayoutManager(context)
-        binding.pointsRecyclerview.setHasFixedSize(true)
+        binding.pointsRecyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+        }
+
         displayPoints()
         setupSwipeToDelete()
+    }
+
+    private fun displayPoints() {
+        fragmentListVm.points.observe(viewLifecycleOwner, {
+            pointsListRecyclerViewAdapter = MyRecyclerViewAdapter(it as MutableList<MetricPoint>)
+            binding.pointsRecyclerview.adapter = pointsListRecyclerViewAdapter
+        })
     }
 
     // Setting up the swipe to delete on the recyclerview
     private fun setupSwipeToDelete() {
         ItemTouchHelper(
                 object : ItemTouchHelper.SimpleCallback(0,
-                        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                        ItemTouchHelper.LEFT) {
                     override fun onMove(recyclerView: RecyclerView,
                                         viewHolder: ViewHolder, target: ViewHolder): Boolean {
-                        return true // true if moved, false otherwise
+                        return false
                     }
 
                     override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-                        // remove from adapter
-                        fragmentListVm.delete(pointsListRecyclerViewAdapter.getPointAtPosition(viewHolder.adapterPosition))
-
+                        val swippedPointPosition = viewHolder.adapterPosition
+                        val swippedPoint = pointsListRecyclerViewAdapter.getPointAtPosition(swippedPointPosition)
+                        val dialogBuilder = setupDeleteDialogConfirmation(swippedPoint)
+                        dialogBuilder.apply {
+                            setPositiveButton(getString(R.string.alertdialog_confirm_delete)){ _, _ ->
+                                fragmentListVm.delete(swippedPoint)
+                                pointsListRecyclerViewAdapter.notifyItemRemoved(swippedPointPosition)
+                             }
+                            dialogBuilder.setNegativeButton(getString(R.string.alertdialog_cancel_delete)){ _, _ ->
+                                pointsListRecyclerViewAdapter.apply {
+                                    undoDelete(swippedPoint, swippedPointPosition)
+                                }
+                            }
+                            create()
+                            show()
+                        }
                     }
-                }).attachToRecyclerView(binding.pointsRecyclerview)
+                }
+        ).attachToRecyclerView(binding.pointsRecyclerview)
     }
 
     // Display a toast if the user leaves an empty field
@@ -140,6 +160,25 @@ class FragmentList : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) mTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         else mTextView.gravity = Gravity.CENTER_HORIZONTAL
     }
+
+    private fun setupDeleteDialogConfirmation(point: MetricPoint): AlertDialog.Builder {
+        val builder = AlertDialog.Builder(context!!)
+
+        val confirmationMsg = "Supprimer <b>${point._id}</b>?"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            builder.setMessage(Html.fromHtml(confirmationMsg, Html.FROM_HTML_MODE_LEGACY))
+        } else {
+
+            builder.setMessage(Html.fromHtml(confirmationMsg))
+        }
+        builder.apply {
+            setTitle(getString(R.string.alertdialog_delete_confirmation_title))
+            setIcon(R.drawable.ic_delete_red)
+            setCancelable(false)
+        }
+        return builder
+    }
+
 
     companion object {
         /**

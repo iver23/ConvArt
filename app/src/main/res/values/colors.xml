@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="snackbar_background">#FF6161</color>
     <color name="snackbar_text">#FFFFFF</color>
+    <color name="bg_row_background">#fa315b</color>
 </resources>
